@@ -1,0 +1,26 @@
+﻿@model ASM_00357.Models.Customer
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="card p-4 shadow" style="width: 350px;">
+        <h4 class="text-center text-primary mb-3">Đăng nhập</h4>
+        <form asp-action="Login" method="post">
+            <div class="form-group mb-3">
+                <input asp-for="Username" class="form-control form-control-lg" placeholder="Email hoặc Username" />
+            </div>
+            <div class="form-group mb-3">
+                <input asp-for="Password" type="password" class="form-control form-control-lg" placeholder="Mật khẩu" />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+        </form>
+        <div class="text-center mt-2">
+            <a href="#">Quên mật khẩu?</a>
+        </div>
+        <hr />
+        <div class="text-center">
+            <a asp-action="Register" class="btn btn-success">Tạo tài khoản mới</a>
+        </div>
+    </div>
+</div>

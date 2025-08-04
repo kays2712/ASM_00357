@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ASM_00357</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" />
+</head>
+@{
+        var username = Context.Session.GetString("Username");
+}
+
+<body>
+    <!-- ✅ HEADER -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">ASM_00357</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active text-warning" : "")" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Cart" ? "active text-warning" : "")" href="/Cart">Giỏ hàng</a>
+                    </li>
+                    @if (Context.Session.GetString("Role") == "Admin")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Product" ? "active text-warning" : "")" href="/Product">Quản lý sản phẩm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Customer" ? "active text-warning" : "")" href="/Customer">Quản lý người dùng</a>
+                        </li>
+                    }
+
+                </ul>
+
+                <ul class="navbar-nav">
+                    @if (Context.Session.GetString("Username") == null)
+                    {
+                        <li class="nav-item"><a class="nav-link" href="/Account/Login">Đăng nhập</a></li>
+                    }
+                    else
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white fw-bold" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Xin chào, @username
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="/Account/Profile">Thông tin người dùng</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item"><a class="nav-link" href="/Account/Logout">Đăng xuất</a></li>
+                    }
+                </ul>
+
+
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- ✅ MAIN BODY -->
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <!-- ✅ FOOTER -->
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <div class="container">
+            <p class="mb-0">© @DateTime.Now.Year ASM_00357 - Dự án bán điện thoại</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,18 @@
+﻿@model IEnumerable<ASM_00357.Models.CartDetail>
+@{
+    ViewData["Title"] = "Cart Details";
+}
+<h2>Cart Details</h2>
+<table class="table">
+    <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Product.Name</td>
+            <td>@item.Quantity</td>
+        </tr>
+    }
+</table>

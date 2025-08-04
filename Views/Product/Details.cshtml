@@ -1,0 +1,67 @@
+﻿@model ASM_00357.Models.Product
+@if (TempData["OrderMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["OrderMessage"]</div>
+}
+
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+}
+
+<div class="row">
+    <div class="col-md-5">
+        <img src="~/images/@Model.ImageUrl" class="img-fluid rounded shadow" />
+    </div>
+
+    <div class="col-md-7">
+        <h2>@Model.Name</h2>
+        <h4 class="text-danger">Giá: @Model.Price.ToString("N0") đ</h4>
+        <p>@Model.Description</p>
+
+        <!-- Nút Mua ngay -->
+        @if (Context.Session.GetInt32("UserId") != null)
+        {
+            <!-- Nếu đã đăng nhập -->
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal">Mua ngay</button>
+            <a class="btn btn-outline-primary" asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@Model.ProductId">Thêm vào giỏ</a>
+        }
+        else
+        {
+            <!-- Nếu chưa đăng nhập -->
+            <a class="btn btn-danger" href="/Account/Login">Mua ngay</a>
+            <a class="btn btn-outline-primary" href="/Account/Login">Thêm vào giỏ</a>
+        }
+
+    </div>
+</div>
+
+<!-- ✅ Modal xác nhận đơn hàng -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form asp-action="ConfirmOrder" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Xác nhận đơn hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Sản phẩm:</strong> @Model.Name</p>
+                    <p><strong>Giá:</strong> @Model.Price.ToString("N0") đ</p>
+                    <div class="form-group mb-2">
+                        <label>Họ và tên</label>
+                        <input name="fullName" class="form-control" required />
+                    </div>
+                    <div class="form-group mb-2">
+                        <label>Địa chỉ giao hàng</label>
+                        <input name="address" class="form-control" required />
+                    </div>
+                    <input type="hidden" name="productId" value="@Model.ProductId" />
+                    <input type="hidden" name="price" value="@Model.Price" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Xác nhận đặt hàng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

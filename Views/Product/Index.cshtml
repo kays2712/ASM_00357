@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ASM_00357.Models.Product>
+@{
+    ViewData["Title"] = "Product List";
+}
+<h2>Products</h2>
+<a class="btn btn-success mb-2" href="/Product/Create">Add Product</a>
+<table class="table">
+    <tr><th>Name</th><th>Price</th><th>Category</th><th>Actions</th></tr>
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>@p.Name</td>
+            <td>@p.Price</td>
+            <td>@p.Category.Name</td>
+            <td>
+                <a href="/Product/Edit/@p.ProductId">Edit</a> |
+                <a href="/Product/Delete/@p.ProductId">Delete</a>
+            </td>
+        </tr>
+    }
+</table>

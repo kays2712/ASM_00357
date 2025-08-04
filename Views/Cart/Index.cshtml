@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ASM_00357.Models.CartDetail>
+@{
+    ViewData["Title"] = "Giỏ hàng của bạn";
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success text-center">
+        @TempData["Message"]
+    </div>
+}
+
+<h2>Giỏ hàng của bạn</h2>
+
+@if (!Model.Any())
+{
+    <p>🛒 Giỏ hàng của bạn đang trống.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+               
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><img src="images/img1.jpg" width="100" height="100" style="object-fit:cover" /></td>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Product.Price.ToString("N0") đ</td>
+                    
+                    <td>
+                        <a class="btn btn-danger btn-sm" asp-action="Remove" asp-route-id="@item.CartDetailId">Xoá</a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+
+    </table>
+}
+@{
+    var total = Model.Sum(item => item.Product.Price * item.Quantity);
+}
+</table>
+
+<div class="text-right mt-4">
+    <h4>Tổng tiền: @total.ToString("N0") đ</h4>
+    <form asp-controller="Cart" asp-action="Checkout" method="post">
+        <button type="submit" class="btn btn-success">Xác nhận đặt hàng</button>
+    </form>
+</div>

@@ -1,0 +1,53 @@
+﻿@model ASM_00357.Models.ProfileViewModel
+@{
+    ViewData["Title"] = "Thông tin người dùng";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-5">
+            <h3>🧑‍💼 Thông tin tài khoản</h3>
+            <table class="table table-bordered">
+                <tr><th>Họ tên</th><td>@Model.Customer.FullName</td></tr>
+                <tr><th>Tên đăng nhập</th><td>@Model.Customer.Username</td></tr>
+                <tr><th>Email</th><td>@Model.Customer.Email</td></tr>
+                <tr><th>Địa chỉ</th><td>@Model.Customer.Address</td></tr>
+                <tr><th>Vai trò</th><td>@Model.Customer.Role</td></tr>
+            </table>
+        </div>
+
+        <div class="col-md-7">
+            <h3>🧾 Lịch sử đơn hàng</h3>
+            @if (Model.Orders.Any())
+            {
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Ngày đặt</th>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Orders)
+                        {
+                            <tr>
+                                <td>@item.CartDetailId</td>
+                                <td>@item.Cart.CreatedDate.ToString("dd/MM/yyyy")</td>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Quantity</td>
+                                <td>@(item.Product.Price* item.Quantity).ToString("N0") đ</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>Chưa có đơn hàng nào.</p>
+            }
+        </div>
+    </div>
+</div>

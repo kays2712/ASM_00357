@@ -1,0 +1,25 @@
+﻿@model IEnumerable<ASM_00357.Models.Customer>
+@{
+    ViewData["Title"] = "Customer List";
+}
+<h2>Customers</h2>
+<table class="table">
+
+    <tr>
+        <th>Full Name</th>
+        <th>Username</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var c in Model)
+    {
+        <tr>
+            <td>@c.FullName</td>
+            <td>@c.Username</td>
+            <td>
+                <a href="/Customer/Edit/@c.CustomerId">Edit</a> |
+                <a href="/Customer/Delete/@c.CustomerId">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
+<a class="btn btn-primary" href="/Customer/Create">Add New</a>
